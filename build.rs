@@ -37,6 +37,11 @@ fn main() {
         "rootsig_1_0",
         "ROOT_SIGNATURE",
     );
+
+    if cfg!(feature = "clang") {
+        dxc = DXCCompiler::new("E:/code/llvm.org/build-clangcl/bin/clang-dxc");
+    }
+
     dxc.compile(particle_life, "particle_life.dxil", "cs_6_0", "main");
 }
 
@@ -69,9 +74,9 @@ impl DXCCompiler {
                 entry_point,
                 "-Fo",
                 dest_path.to_str().unwrap(),
-                "-Od",
-                "-Zi",
-                "-Qembed_debug",
+                // "-Od",
+                // "-Zi",
+                // "-Qembed_debug",
             ])
             .output()
             .expect("Failed to run dxc");
